@@ -4,7 +4,7 @@ import React, {useEffect, useState } from 'react';
 function App() {
 const [events, setEvents] = useState([]);
 useEffect(()=> {
-fetch("https://localhost:7014/WeatherForecast")
+    fetch("https://api-examplewebapp.azurewebsites.net/WeatherForecast")
 .then(response => response.json())
 .then(data=>{
   setEvents(data);
