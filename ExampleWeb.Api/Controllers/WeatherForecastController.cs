@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ExampleWeb.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]/[action]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -12,10 +12,12 @@ namespace ExampleWeb.Api.Controllers
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IConfiguration _configuration; 
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IConfiguration configuration )
         {
             _logger = logger;
+            _configuration = configuration;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
@@ -28,6 +30,11 @@ namespace ExampleWeb.Api.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+        [HttpGet(Name = "GetConfig")]
+        public string GetConfig()
+        {
+            return _configuration["ConnectionStrings"];
         }
     }
 }
